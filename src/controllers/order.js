@@ -28,10 +28,15 @@ module.exports = {
       filter = { userId: req.user.id };
     }
 
+    // const data = await res.getModelList(Order, customFilter, [
+    //   "userId",
+    //   "pizzaId",
+    // ]);
+
     const data = await res.getModelList(Order, customFilter, [
-      "userId",
-      "pizzaId",
-    ]);
+        "userId",
+        { path: 'pizzaId', populate: { path: 'toppingIds' } },  // "pizzaId",
+      ]);
 
     res.status(200).send({
       error: false,
