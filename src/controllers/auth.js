@@ -7,6 +7,7 @@
 const User = require('../models/user')
 const Token = require('../models/token')
 const passwordEncrypt = require('../helpers/passwordEncrypt')
+const jwt = require("jsonwebtoken")
 
 module.exports = {
 
@@ -46,9 +47,46 @@ module.exports = {
 
                     /* SIMPLE TOKEN */
 
+                    /* JWT */
+                    
+                    const accessInfo = {          //* Kisa omurlu kritik olan bilgiler.
+                        key: process.env.ACCESS_KEY,
+                        time: '30m',
+                        data: {
+                            id: user.id,
+                            username: user.username,
+                            email: user.email,
+                            password: user.password,
+                            isActive: user.isActive,
+                            isAdmin: user.isAdmin
+                        }
+
+                    }
+                    
+                    const refreshInfo = {      //* Uzun omurlu kritik olmayan bilgiler.
+                        key: process.env.REFRESH_KEY,
+                        time: '3d',
+                        data: {
+                            id: user.id,
+                            password: user.password  // encrypted password
+                        }
+                    }
+
+                    // jwt.sign(data, secret_key, { expiresIn: '30m' })
+                    const accessToken = jwt.sign(accessInfo.data, accessInfo.key, { expiresIn: accessInfo.time })
+                    const refreshToken = jwt.sign(refreshInfo.data, refreshInfo.key, { expiresIn: refreshInfo.time })
+                    
+
+
+                    /* JWT */ 
+
                     res.status(200).send({
                         error: false,
                         token: tokenData.token,
+                        bearer: {
+                            access: accessToken,
+                            refresh: refreshToken,
+                        },
                         user
                     })
 
