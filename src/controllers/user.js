@@ -54,7 +54,14 @@ module.exports = {
             #swagger.summary = "Get Single User"
         */
 
-        const data = await User.findOne({ _id: req.params.id })
+        // Manage only self-record.
+        let filter = {}
+        if (!req.user.isAdmin) {
+            // const data = await User.findOne({ _id: req.params.id, _id: req.user._id })
+            filter = { _id: req.user._id }
+        }
+
+        const data = await User.findOne({ _id: req.params.id, ...filter })
 
         res.status(200).send({
             error: false,
@@ -68,7 +75,13 @@ module.exports = {
             #swagger.summary = "Update User"
         */
 
-        const data = await User.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
+            // Manage only self-record.
+            let filter = {}
+            if (!req.user.isAdmin) {
+                filter = { _id: req.user._id }
+            }
+
+        const data = await User.updateOne({ _id: req.params.id, ...filter }, req.body, { runValidators: true })
 
         res.status(202).send({
             error: false,
