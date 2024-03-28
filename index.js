@@ -38,6 +38,9 @@ dbConnection();
 // Accept JSON:
 app.use(express.json());
 
+// Accept Form-Data:
+app.use(express.urlencoded({ extended: true }))
+
 // Logger:
 app.use(require("./src/middlewares/logger"));
 
@@ -48,7 +51,7 @@ app.use(require("./src/middlewares/authentication"));
 app.use(require("./src/middlewares/queryHandler"));
 
 /* ------------------------------------------------------- */
-// EMAIL:
+//! EMAIL:
 // nodemailer
 // https://www.nodemailer.com/
 // https://www.npmjs.com/package/nodemailer
@@ -71,7 +74,7 @@ app.use(require("./src/middlewares/queryHandler"));
 
 // Connect to MailServer:
 // const transporter = nodemailer.createTransport({
-//   // SMTP:
+// //* SMTP:
 //   host: 'smtp.ethereal.email',
 //   port: 587,
 //   secure: false,   // ssl, tls
@@ -142,6 +145,9 @@ app.all("/", (req, res) => {
     user: req.user,
   });
 });
+
+// Static Files:
+app.use('/uploads', express.static('./uploads'))
 
 /* ------------------------------------------------------- */
 

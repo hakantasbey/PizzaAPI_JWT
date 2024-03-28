@@ -68,6 +68,37 @@ module.exports = {
             #swagger.summary = "Update Pizza"
         */
 
+        // console.log(req.file);  // upload single()
+        // console.log(req.files);  // upload array() || upload.any()
+
+         /*
+         [
+            {
+                fieldname: 'images',
+                originalname: 'papagan.jpeg',
+                encoding: '7bit',
+                mimetype: 'image/jpeg',
+                destination: './uploads',
+                filename: '1711659209665-papagan.jpeg',
+                path: 'uploads/1711659209665-papagan.jpeg',
+                size: 7270
+            }
+         ]   
+        */
+
+        //* Mevcut pizza resimlerini getir.
+        const pizza = await Pizza.findOne({_id: req.params.id}, { _id: 0, images: 1 })
+        // console.log(pizza);
+
+        // pizza.images
+        for (let file of req.files) {
+            //* Mevcut pizza resimlerine ekle.
+            // pizza.images.push(file.filename)
+            pizza.images.push('/uploads/' + file.filename)
+        }
+        //* Pizza resimlerini req.body'ye aktar:
+        req.body.images = pizza.images
+
         const data = await Pizza.updateOne({ _id: req.params.id }, req.body, { runValidators: true })
 
         res.status(202).send({
