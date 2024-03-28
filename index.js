@@ -54,7 +54,7 @@ app.use(require("./src/middlewares/queryHandler"));
 // https://www.npmjs.com/package/nodemailer
 // https://ethereal.email/
 
-const nodemailer = require('nodemailer')
+// const nodemailer = require('nodemailer')
 
 // Create Test (Fake) Account:
 // nodemailer.createTestAccount().then((data) => console.log(data));
@@ -70,27 +70,58 @@ const nodemailer = require('nodemailer')
 */
 
 // Connect to MailServer:
-const transporter = nodemailer.createTransport({
-  // SMTP:
-  host: 'smtp.ethereal.email',
-  port: 587,
-  secure: false,   // ssl, tls
-  auth: {
-    user: 'taudv55qv6qskanw@ethereal.email',
-    pass: 'Ahm2UPDRnfCSe3SH3p'
-  }
-})
+// const transporter = nodemailer.createTransport({
+//   // SMTP:
+//   host: 'smtp.ethereal.email',
+//   port: 587,
+//   secure: false,   // ssl, tls
+//   auth: {
+//     user: 'taudv55qv6qskanw@ethereal.email',
+//     pass: 'Ahm2UPDRnfCSe3SH3p'
+//   }
+// })
 // console.log(transporter);
 
-transporter.sendMail({
-  from: 'taudv55qv6qskanw@ethereal.email',
-  to: 'tasbeyhakan@gmail.com',    // 'a@b.com, c@d.com'
-  subject: 'Hello',
-  text: 'Hello There. How are you?',
-  html: '<b>Hello There</b><p>How are you?</p>',
-}, (error,success)=> {
-  success ? console.log('SUCCESS',success) : console.log('ERROR', error);
-})
+// SendMail: 
+// transporter.sendMail({
+//   from: 'taudv55qv6qskanw@ethereal.email',
+//   to: 'tasbeyhakan@gmail.com',    // 'a@b.com, c@d.com'
+//   subject: 'Hello',
+//   text: 'Hello There. How are you?',
+//   html: '<b>Hello There</b><p>How are you?</p>',
+// }, (error,success)=> {
+//   success ? console.log('SUCCESS',success) : console.log('ERROR', error);
+// })
+
+// //* GoogleMail (gmail)
+// //* Google -> AccountHome -> Security -> Two-Step-Verify -> App-Passwords
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: 'tasbeyhakan@gmail.com',
+//     pass: ''
+//   }
+// })
+
+// //? YandexMail (yandex):
+// const transporter = nodemailer.createTransport({
+//     service: 'Yandex',
+//     auth: {
+//         user: 'username@yandex.com',
+//         pass: 'password' // your emailPassword
+//     }
+// })
+
+
+// transporter.sendMail({
+//   // from: 'tasbeyhakan@gmail.com',
+//   to: 'tasbeyhakan@gmail.com',
+//   subject: 'Hello',
+//   text: 'Hello There. How are you?',
+//   html: '<b>Hello There</b><p>How are you?</p>'
+
+// }, (error, success) => console.log(success, error));
+
 
 /* ------------------------------------------------------- */
 // Routes:

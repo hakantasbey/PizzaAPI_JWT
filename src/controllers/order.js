@@ -5,6 +5,7 @@
 // Order Controller:
 
 const Order = require("../models/order");
+const sendMail = require('../helpers/sendMail')
 
 module.exports = {
   list: async (req, res) => {
@@ -60,6 +61,17 @@ module.exports = {
     }
 
     const data = await Order.create(req.body);
+
+      /* SendMail */
+      sendMail (
+        data.email, // to
+        'Siparisiniz alindi.',  // subject
+        // Message
+        `
+        <h1>${data.username}</h1>
+        <p>Siparisiniz alindi.</p>
+        `
+    )
 
     res.status(201).send({
       error: false,
