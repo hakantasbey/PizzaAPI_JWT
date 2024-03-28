@@ -9,6 +9,7 @@
     $ npm i morgan swagger-autogen swagger-ui-express redoc-express
     $ mkdir logs
     $ npm i jsonwebtoken
+    $ npm i nodemailer multer
     $ nodemon
 */
 const express = require("express");
@@ -45,6 +46,51 @@ app.use(require("./src/middlewares/authentication"));
 
 // findSearchSortPage / res.getModelList:
 app.use(require("./src/middlewares/queryHandler"));
+
+/* ------------------------------------------------------- */
+// EMAIL:
+// nodemailer
+// https://www.nodemailer.com/
+// https://www.npmjs.com/package/nodemailer
+// https://ethereal.email/
+
+const nodemailer = require('nodemailer')
+
+// Create Test (Fake) Account:
+// nodemailer.createTestAccount().then((data) => console.log(data));
+/*
+{
+  user: 'taudv55qv6qskanw@ethereal.email',
+  pass: 'Ahm2UPDRnfCSe3SH3p',
+  smtp: { host: 'smtp.ethereal.email', port: 587, secure: false },
+  imap: { host: 'imap.ethereal.email', port: 993, secure: true },
+  pop3: { host: 'pop3.ethereal.email', port: 995, secure: true },
+  web: 'https://ethereal.email'
+}
+*/
+
+// Connect to MailServer:
+const transporter = nodemailer.createTransport({
+  // SMTP:
+  host: 'smtp.ethereal.email',
+  port: 587,
+  secure: false,   // ssl, tls
+  auth: {
+    user: 'taudv55qv6qskanw@ethereal.email',
+    pass: 'Ahm2UPDRnfCSe3SH3p'
+  }
+})
+// console.log(transporter);
+
+transporter.sendMail({
+  from: 'taudv55qv6qskanw@ethereal.email',
+  to: 'tasbeyhakan@gmail.com',    // 'a@b.com, c@d.com'
+  subject: 'Hello',
+  text: 'Hello There. How are you?',
+  html: '<b>Hello There</b><p>How are you?</p>',
+}, (error,success)=> {
+  success ? console.log('SUCCESS',success) : console.log('ERROR', error);
+})
 
 /* ------------------------------------------------------- */
 // Routes:

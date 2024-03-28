@@ -52,6 +52,12 @@ module.exports = {
             #swagger.tags = ["Orders"]
             #swagger.summary = "Create Order"
         */
+    
+    // get price from the pizza:
+    if (!req.body?.price) {
+        const pizzaData = await Pizza.findOne({ _id: req.body.pizzaId })
+        req.body.price = pizzaData.price
+    }
 
     const data = await Order.create(req.body);
 
