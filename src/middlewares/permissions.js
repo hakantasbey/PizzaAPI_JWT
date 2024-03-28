@@ -8,7 +8,7 @@ module.exports = {
 
     isLogin: (req, res, next) => {
 
-        return next()    //* permissions lari pasife aldik.
+        // return next()    //* permissions lari pasife aldik.
 
         if (req.user && req.user.isActive) {
             next()
@@ -20,7 +20,7 @@ module.exports = {
 
     isAdmin: (req, res, next) => {
 
-        return next()     //* permissions lari pasife aldik.
+        // return next()     //* permissions lari pasife aldik.
 
         if (req.user && req.user.isActive && req.user.isAdmin) {
             next()
